@@ -32,23 +32,16 @@ playerElement.setAttribute("width", "640");
 playerElement.setAttribute("id", "videojs_player");
 playerElement.setAttribute("class", "video-js vjs-default-skin vjs-big-play-centered poc-player");
 playerElement.setAttribute("controls", "");
-//playerElement.setAttribute("src", hls);
+playerElement.setAttribute("src", mp4);
 playerElement.setAttribute("poster", poster);
-
-//build src element
-var source = document.createElement("source");
-source.setAttribute("src", hls);
-source.setAttribute("type", "application/x-mpegURL");
-
-// append source to player
-playerElement.appendChild(source);
-
 // append video element to html handle.
 containerElement.appendChild(playerElement);
 
 // Initialize videojs on video-element id
 var player = videojs('videojs_player', {
-    "nativeControlsForTouch": false,
+    controlBar: {
+      remainingTimeDisplay: false
+    }
 });
 
 // set subtitles
@@ -74,7 +67,7 @@ player.addRemoteTextTrack({
 });
 
 // set active texttracks
-// player.textTracks()[2].mode = 'showing';
+player.textTracks()[2].mode = 'showing';
 
 // player.textTracks()[0].mode =  'showing' | 'disabled'
 // create the bing menu
@@ -84,6 +77,8 @@ var bingLink2 = ("<a href='#456' class='bing-link'> BINGLINK2 </a>")
 // Get a component to subclass
 // var vjsButton = videojs.getComponent('button');
 var vjsComponent = videojs.getComponent('component');
+
+
 
 // Subclass the component (see 'extend' doc for more info)
 // list of components to extend http://docs.videojs.com/docs/guides/components.html
@@ -98,7 +93,6 @@ var bingMenu = videojs.extend(vjsComponent, {
   },
   handleClick: function () {
     /* do something on click */
-    console.log("clicked");
   }
 });
 

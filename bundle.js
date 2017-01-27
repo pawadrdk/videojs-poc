@@ -61,6 +61,10 @@
 	// mp4 download
 	var mp4 = "http://drod07f-vh.akamaihd.net/p/all/clear/download/50/587ba535a11f9f17b4067f50/Alene-i-vildmarken--4-10-_e2ef26679a9245f5bc6aac8b6d37a623_2812.mp4";
 
+	// subtitles webvtt
+	var webvtt1 = "https://www.dr.dk/mu/Asset?Id=58891c496187ae03ec8cce73";
+	var webvtt2 = "https://www.dr.dk/mu/Asset?Id=587e90e06187a409746e5ada";
+	var webvtt3 = "https://www.dr.dk/mu/Asset?Id=587555aba11fac0d8c8855f3";
 	// poster
 	var poster = "http://www.dr.dk/mu-online/api/1.3/bar/58760448a11fa01578861333?width=322&height=181";
 
@@ -75,19 +79,51 @@
 	playerElement.setAttribute("id", "videojs_player");
 	playerElement.setAttribute("class", "video-js vjs-default-skin vjs-big-play-centered poc-player");
 	playerElement.setAttribute("controls", "");
-	playerElement.setAttribute("src", mp4);
+	//playerElement.setAttribute("src", hls);
 	playerElement.setAttribute("poster", poster);
+
+	//build src element
+	var source = document.createElement("source");
+	source.setAttribute("src", hls);
+	source.setAttribute("type", "application/x-mpegURL");
+
+	// append source to player
+	playerElement.appendChild(source);
 
 	// append video element to html handle.
 	containerElement.appendChild(playerElement);
 
 	// Initialize videojs on video-element id
 	var player = videojs('videojs_player', {
-	  controlBar: {
-	    remainingTimeDisplay: false
-	  }
+	  "nativeControlsForTouch": false
 	});
 
+	// set subtitles
+	player.addRemoteTextTrack({
+	  kind: 'subtitles',
+	  src: webvtt1,
+	  srclang: 'dk',
+	  label: 'HardOfHearing'
+	});
+
+	player.addRemoteTextTrack({
+	  kind: 'subtitles',
+	  src: webvtt2,
+	  srclang: 'dk',
+	  label: 'Foreign'
+	});
+
+	player.addRemoteTextTrack({
+	  kind: 'subtitles',
+	  src: webvtt3,
+	  srclang: 'dk',
+	  label: 'Foreign_HardOfHearing'
+	});
+
+	// set active texttracks
+	// player.textTracks()[2].mode = 'showing';
+
+	// player.textTracks()[0].mode =  'showing' | 'disabled'
 	// create the bing menu
 	var bingLink1 = "<a href='#123' class='bing-link'> BINGLINK1 </a>";
 	var bingLink2 = "<a href='#456' class='bing-link'> BINGLINK2 </a>";
@@ -109,14 +145,74 @@
 	  },
 	  handleClick: function handleClick() {
 	    /* do something on click */
+	    console.log("clicked");
 	  }
 	});
 
 	// Register the new component with videojs
 	vjsComponent.registerComponent('bingMenu', bingMenu);
 
-	// add the bingmenu component to the player
+	// Add the bingmenu component to the player
 	var myBingMenu = player.addChild("bingMenu");
+
+	var previousTime = 0;
+	var currentTime = 0;
+	player.on("waiting", function () {
+	  console.log("previoustime", previousTime);
+	  console.log("currenttime", player.currentTime());
+	  console.log("Waiting..");
+	});
+	player.on("play", function () {
+	  console.log("Play..");
+	});
+	player.on("playing", function () {
+	  previousTime = player.currentTime();
+	  console.log("Playing..", player.bufferedPercent());
+	});
+	player.on("pause", function () {
+	  console.log("Pause..");
+	});
+	player.on("paused", function () {
+	  console.log("Paused..");
+	});
+
+	// happens every second
+	player.on('timeupdate', function () {
+	  //console.log("progress : " +  player.currentTime() + " of " + player.duration());
+	});
+	// happens every ~3 seconds
+	player.on("progress", function (evt) {
+	  previousTime = player.currentTime();
+	  console.log("progress", player.currentTime());
+	});
+
+	player.on('seeking', function (evt) {
+	  console.log("seeking", player.currentTime());
+	});
+
+	player.on("seeked", function () {
+	  console.log("seeked", player.currentTime());
+	});
+	player.on('ended', function (evt) {
+	  console.log("ended");
+	});
+
+	player.on('loadeddata', function (evt) {
+	  console.log("loadeddata", evt);
+	});
+
+	player.on('loadedmetadata', function (evt) {
+	  console.log("loadedmetadata", evt);
+	});
+	player.on('volumechange', function (evt) {
+	  console.log("volumechange", evt);
+	});
+	player.on('loading', function (evt) {
+	  console.log("loading", evt);
+	});
+	player.on('loaded', function (evt) {
+	  console.log("loaded", evt);
+	});
 
 /***/ }
 /******/ ]);
