@@ -7,6 +7,10 @@ var dash = "https://s3.amazonaws.com/_bc_dml/example-content/sintel_dash/sintel_
 
 // dvr
 
+// Live streaming
+var decrypt = require("@dr/drc-media-decryption");
+var live = "http://dr01-lh.akamaihd.net/i/dr01_0@147054/master.m3u8?b=100-3000";
+console.log("live", live);
 
 // encrypted hls
 var encryptedHls = "http://drod08h-vh.akamaihd.net/i/dk/encrypted/streaming/75/588246aaa11f9f0c2c197375/The-Tonight-Show-med-Jimmy-Fal_fac673769752436faeda69fb8ba557ed_,1128,562,2394,362,.mp4.csmil/master.m3u8"
@@ -37,7 +41,7 @@ playerElement.setAttribute("poster", poster);
 
 //build src element
 var source = document.createElement("source");
-source.setAttribute("src", hls);
+source.setAttribute("src", live);
 source.setAttribute("type", "application/x-mpegURL");
 
 // append source to player

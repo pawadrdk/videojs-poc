@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@dr/drc-media-decryption": "^1.0.1",
     "css-loader": "^0.26.1",
     "http-server": "^0.9.0",
     "less": "^2.7.2",
