@@ -59,8 +59,8 @@
 	var live = "http://dr01-lh.akamaihd.net/i/dr01_0@147054/master.m3u8?b=100-3000";
 
 	// encrypted hls
-	//var encryptedHls = "http://drod08h-vh.akamaihd.net/i/dk/encrypted/streaming/75/588246aaa11f9f0c2c197375/The-Tonight-Show-med-Jimmy-Fal_fac673769752436faeda69fb8ba557ed_,1128,562,2394,362,.mp4.csmil/master.m3u8"
-	var encryptedHls = "http://aegon.codesense.fi/~nnarhinen/encrypted-hls/list-session.m3u8";
+	var encryptedHls = "http://drod08h-vh.akamaihd.net/i/dk/encrypted/streaming/75/588246aaa11f9f0c2c197375/The-Tonight-Show-med-Jimmy-Fal_fac673769752436faeda69fb8ba557ed_,1128,562,2394,362,.mp4.csmil/master.m3u8";
+
 	// mp4 download
 	var mp4 = "http://drod07f-vh.akamaihd.net/p/all/clear/download/50/587ba535a11f9f17b4067f50/Alene-i-vildmarken--4-10-_e2ef26679a9245f5bc6aac8b6d37a623_2812.mp4";
 
@@ -88,7 +88,7 @@
 
 	//build src element
 	var source = document.createElement("source");
-	source.setAttribute("src", encryptedHls);
+	source.setAttribute("src", live);
 	source.setAttribute("type", "application/x-mpegURL");
 	//source.setAttribute("type", "application/dash+xml");
 	// append source to player

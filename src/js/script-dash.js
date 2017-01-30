@@ -41,9 +41,9 @@ playerElement.setAttribute("poster", poster);
 
 //build src element
 var source = document.createElement("source");
-source.setAttribute("src", live);
-source.setAttribute("type", "application/x-mpegURL");
-//source.setAttribute("type", "application/dash+xml");
+source.setAttribute("src", dash);
+//source.setAttribute("type", "application/x-mpegURL");
+source.setAttribute("type", "application/dash+xml");
 // append source to player
 playerElement.appendChild(source);
 
