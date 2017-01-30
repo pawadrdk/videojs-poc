@@ -10,10 +10,11 @@ var dash = "https://s3.amazonaws.com/_bc_dml/example-content/sintel_dash/sintel_
 // Live streaming
 var decrypt = require("@dr/drc-media-decryption");
 var live = "http://dr01-lh.akamaihd.net/i/dr01_0@147054/master.m3u8?b=100-3000";
+console.log("live", live);
 
 // encrypted hls
 var encryptedHls = "http://drod08h-vh.akamaihd.net/i/dk/encrypted/streaming/75/588246aaa11f9f0c2c197375/The-Tonight-Show-med-Jimmy-Fal_fac673769752436faeda69fb8ba557ed_,1128,562,2394,362,.mp4.csmil/master.m3u8"
-
+// var encryptedHls = "http://aegon.codesense.fi/~nnarhinen/encrypted-hls/list-session.m3u8";
 // mp4 download
 const mp4 = "http://drod07f-vh.akamaihd.net/p/all/clear/download/50/587ba535a11f9f17b4067f50/Alene-i-vildmarken--4-10-_e2ef26679a9245f5bc6aac8b6d37a623_2812.mp4";
 
@@ -35,7 +36,7 @@ playerElement.setAttribute("width", "640");
 playerElement.setAttribute("id", "videojs_player");
 playerElement.setAttribute("class", "video-js vjs-default-skin vjs-big-play-centered poc-player");
 playerElement.setAttribute("controls", "");
-//playerElement.setAttribute("crossorigin", "anonymous");
+playerElement.setAttribute("crossorigin", "anonymous");
 //playerElement.setAttribute("src", hls);
 playerElement.setAttribute("poster", poster);
 
@@ -87,32 +88,31 @@ var bingLink2 = ("<a href='#456' class='bing-link'> BINGLINK2 </a>")
 
 // Get a component to subclass
 // var vjsButton = videojs.getComponent('button');
-var vjsComponent = videojs.getComponent('Component');
+var vjsComponent = videojs.getComponent('component');
 
 // Subclass the component (see 'extend' doc for more info)
 // list of components to extend http://docs.videojs.com/docs/guides/components.html
-
 var bingMenu = videojs.extend(vjsComponent, {
   constructor: function () {
     vjsComponent.apply(this, arguments);
-    // initialize your button
+    /* initialize your button */
     // Add component specific styling
     this.addClass("bing-menu");
     // add component specific html element
     this.el().innerHTML = bingLink1 + bingLink2;
   },
   handleClick: function () {
-    // do something on click
+    /* do something on click */
     console.log("clicked");
   }
 });
 
 // Register the new component with videojs
-vjsComponent.registerComponent('BingMenu', bingMenu);
+vjsComponent.registerComponent('bingMenu', bingMenu);
 
 // Add the bingmenu component to the player
 var myBingMenu = player.addChild("bingMenu");
-/*
+
 
 var previousTime = 0;
 var currentTime = 0;
@@ -172,4 +172,3 @@ player.on('loading', function (evt) {
 player.on('loaded', function (evt) {
   console.log("loaded", evt);
 });
-*/

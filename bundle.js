@@ -57,11 +57,10 @@
 	// Live streaming
 	var decrypt = __webpack_require__(1);
 	var live = "http://dr01-lh.akamaihd.net/i/dr01_0@147054/master.m3u8?b=100-3000";
-	console.log("live", live);
 
 	// encrypted hls
-	var encryptedHls = "http://drod08h-vh.akamaihd.net/i/dk/encrypted/streaming/75/588246aaa11f9f0c2c197375/The-Tonight-Show-med-Jimmy-Fal_fac673769752436faeda69fb8ba557ed_,1128,562,2394,362,.mp4.csmil/master.m3u8";
-
+	//var encryptedHls = "http://drod08h-vh.akamaihd.net/i/dk/encrypted/streaming/75/588246aaa11f9f0c2c197375/The-Tonight-Show-med-Jimmy-Fal_fac673769752436faeda69fb8ba557ed_,1128,562,2394,362,.mp4.csmil/master.m3u8"
+	var encryptedHls = "http://aegon.codesense.fi/~nnarhinen/encrypted-hls/list-session.m3u8";
 	// mp4 download
 	var mp4 = "http://drod07f-vh.akamaihd.net/p/all/clear/download/50/587ba535a11f9f17b4067f50/Alene-i-vildmarken--4-10-_e2ef26679a9245f5bc6aac8b6d37a623_2812.mp4";
 
@@ -83,14 +82,15 @@
 	playerElement.setAttribute("id", "videojs_player");
 	playerElement.setAttribute("class", "video-js vjs-default-skin vjs-big-play-centered poc-player");
 	playerElement.setAttribute("controls", "");
+	//playerElement.setAttribute("crossorigin", "anonymous");
 	//playerElement.setAttribute("src", hls);
 	playerElement.setAttribute("poster", poster);
 
 	//build src element
 	var source = document.createElement("source");
-	source.setAttribute("src", live);
+	source.setAttribute("src", encryptedHls);
 	source.setAttribute("type", "application/x-mpegURL");
-
+	//source.setAttribute("type", "application/dash+xml");
 	// append source to player
 	playerElement.appendChild(source);
 
@@ -98,9 +98,7 @@
 	containerElement.appendChild(playerElement);
 
 	// Initialize videojs on video-element id
-	var player = videojs('videojs_player', {
-	  "nativeControlsForTouch": false
-	});
+	var player = videojs('videojs_player', {});
 
 	// set subtitles
 	player.addRemoteTextTrack({
@@ -134,30 +132,32 @@
 
 	// Get a component to subclass
 	// var vjsButton = videojs.getComponent('button');
-	var vjsComponent = videojs.getComponent('component');
+	var vjsComponent = videojs.getComponent('Component');
 
 	// Subclass the component (see 'extend' doc for more info)
 	// list of components to extend http://docs.videojs.com/docs/guides/components.html
+
 	var bingMenu = videojs.extend(vjsComponent, {
 	  constructor: function constructor() {
 	    vjsComponent.apply(this, arguments);
-	    /* initialize your button */
+	    // initialize your button
 	    // Add component specific styling
 	    this.addClass("bing-menu");
 	    // add component specific html element
 	    this.el().innerHTML = bingLink1 + bingLink2;
 	  },
 	  handleClick: function handleClick() {
-	    /* do something on click */
+	    // do something on click
 	    console.log("clicked");
 	  }
 	});
 
 	// Register the new component with videojs
-	vjsComponent.registerComponent('bingMenu', bingMenu);
+	vjsComponent.registerComponent('BingMenu', bingMenu);
 
 	// Add the bingmenu component to the player
 	var myBingMenu = player.addChild("bingMenu");
+	/*
 
 	var previousTime = 0;
 	var currentTime = 0;
@@ -167,17 +167,17 @@
 	  console.log("Waiting..");
 	});
 	player.on("play", function () {
-	  console.log("Play..");
+	  console.log("Play..")
 	});
 	player.on("playing", function () {
 	  previousTime = player.currentTime();
-	  console.log("Playing..", player.bufferedPercent());
+	  console.log("Playing..", player.bufferedPercent())
 	});
 	player.on("pause", function () {
-	  console.log("Pause..");
+	  console.log("Pause..")
 	});
 	player.on("paused", function () {
-	  console.log("Paused..");
+	  console.log("Paused..")
 	});
 
 	// happens every second
@@ -217,6 +217,7 @@
 	player.on('loaded', function (evt) {
 	  console.log("loaded", evt);
 	});
+	*/
 
 /***/ },
 /* 1 */
