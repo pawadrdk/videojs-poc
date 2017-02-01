@@ -12,10 +12,12 @@
   "dependencies": {
     "@dr/drc-media-decryption": "^1.0.1",
     "css-loader": "^0.26.1",
+    "hls.js": "^0.6.19",
     "http-server": "^0.9.0",
     "less": "^2.7.2",
     "less-loader": "^2.2.3",
     "style-loader": "^0.13.1",
+    "videojs-contrib-quality-levels": "^2.0.2",
     "webpack": "^1.13.2"
   },
   "devDependencies": {
