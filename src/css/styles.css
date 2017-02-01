@@ -34,3 +34,19 @@ video::-webkit-media-controls {
 video::-webkit-media-controls-enclosure {
   display:none !important;
 }
+
+ p {
+    background-color: #eee;
+    border: thin solid #777;
+    padding: 10px;
+ }
+ .event-list {
+    float:left;
+    border: black;
+    margin-left: 5px;
+    width: 200px;
+
+ }
+ .control{
+    clear: both;
+ }

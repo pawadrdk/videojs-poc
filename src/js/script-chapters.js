@@ -40,11 +40,32 @@ var player = videojs('videojs_player', {
 });
 
 player.markers({
+    markerTip:{
+       display: true,
+       text: function(marker) {
+          return marker.text;
+       }
+    },
+    breakOverlay:{
+       display: true,
+       displayTime: 3,
+       text: function(marker) {
+          return marker.text;
+       }
+    },
+    onMarkerReached: function(marker) {
+       $('.event-list').append("<div>marker reached: " + marker.text + "</div>");
+
+    },
+    onMarkerClick: function(marker){
+       $('.event-list').append("<div>marker clicked: " + marker.text + "</div>");
+
+    },
     markers: [
-        {time: 70, text: "this"},
-        {time: 170,  text: "is"},
-        {time: 290,text: "so"},
-        {time: 430,  text: "cool"}
+        {time: 0, text: "Velkommen til TV AVISEN 21:00", overlayText: 'TV AVISEN 21:00'},
+        {time: 300,  text: "USA - Trump møder May", overlayText: 'USA - Trump møder May'},
+        {time: 600,text: "USA - Stemningen under pressemødet", overlayText: 'USA - Stemningen under pressemødet'},
+        {time: 900,  text: "Bandepakke - Færre betjente jagter rockere", overlayText: 'Bandepakke - Færre betjente jagter rockere'}
     ]
  });
 
@@ -69,7 +90,11 @@ var bingMenu = videojs.extend(vjsComponent, {
   },
   handleClick: function () {
     /* do something on click */
-    console.log('clicked again');
+    console.log('clicked');
+    player.markers.add([{
+       time: 1500,
+       text: "Tilføjet dynamisk!"
+    }]);
   }
 });
 
