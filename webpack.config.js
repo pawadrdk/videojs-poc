@@ -1,5 +1,5 @@
 module.exports = {
-    entry: "./src/js/script-hlsjs.js",
+    entry: "./src/js/script-hls-live.js",
     output: {
         path: __dirname,
         filename: "bundle.js"

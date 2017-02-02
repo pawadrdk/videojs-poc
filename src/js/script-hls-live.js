@@ -1,18 +1,13 @@
 "use strict";
+
+// Live streaming
+var live = "http://dr01-lh.akamaihd.net/i/dr01_0@147054/master.m3u8?b=100-3000";
+
 // hls
 const remote_hls = "http://drod07f-vh.akamaihd.net/i/all/clear/download/50/587ba535a11f9f17b4067f50/Alene-i-vildmarken--4-10-_e2ef26679a9245f5bc6aac8b6d37a623_,296,481,913,2020,2812,.mp4.csmil/master.m3u8?cc1=name=Dansk~default=no~forced=no~lang=da~uri=http://www.dr.dk/mu/subtitles/playlist/urn:dr:mu:manifest:587ba535a11f9f17b4067f50%3Fsegmentsizeinms=60000%26subtitleType=HardOfHearing";
 
 // poster
 const poster = "http://www.dr.dk/mu-online/api/1.3/bar/58760448a11fa01578861333?width=322&height=181";
-
-// Live streaming
-var decrypt = require("@dr/drc-media-decryption");
-var encrypted_hls = "http://drod08h-vh.akamaihd.net/i/dk/encrypted/streaming/75/588246aaa11f9f0c2c197375/The-Tonight-Show-med-Jimmy-Fal_fac673769752436faeda69fb8ba557ed_,1128,562,2394,362,.mp4.csmil/master.m3u8";
-
-var live = "http://dr01-lh.akamaihd.net/i/dr01_0@147054/master.m3u8?b=100-3000";
-console.log("live", live);
-
-
 
 var containerElement = document.getElementById("playerHandle");
 console.log(containerElement);
@@ -26,37 +21,32 @@ playerElement.setAttribute("id", "videojs_player");
 playerElement.setAttribute("class", "video-js vjs-default-skin vjs-big-play-centered poc-player");
 playerElement.setAttribute("controls", "");
 
-var source = document.createElement("source");
-source.setAttribute("src", encrypted_hls);
-source.setAttribute("type", "application/x-mpegURL");
-// append source to player
-playerElement.appendChild(source);
+var hls;
 
-
-// var hls;
-//
-// if(Hls.isSupported()) {
-//   console.log('Got HLS');
-//   // alert('HLS');
-//   // hls = new Hls();
-//   // hls.loadSource(encrypted_hls);
-//   // hls.attachMedia(playerElement);
-//   // hls.on(Hls.Events.MANIFEST_PARSED,function() {
-//   //   playerElement.play();
-//   // });
-// }
-// else { // Running native iOS
-//   console.log('No HLS');
-//   //alert('NO HLS');
-//   //playerElement.setAttribute("src", remote_hls);
-// }
+if(Hls.isSupported()) {
+  console.log('Got HLS');
+  alert('HLS');
+  hls = new Hls();
+  hls.loadSource(live);
+  hls.attachMedia(playerElement);
+  hls.on(Hls.Events.MANIFEST_PARSED,function() {
+    playerElement.play();
+  });
+}
+else { // Running native iOS
+  console.log('No HLS');
+  //alert('NO HLS');
+  playerElement.setAttribute("src", live);
+}
 
 // append video element to html handle.
 containerElement.appendChild(playerElement);
 
 // Initialize videojs on video-element id
 var player = videojs('videojs_player', {
-
+    controlBar: {
+      remainingTimeDisplay: false
+    }
 });
 
 player.markers({
@@ -104,12 +94,12 @@ var bingMenu = videojs.extend(vjsComponent, {
     /* do something on click */
     console.log('clicked');
     playerElement.play();
-    // if (hls.currentLevel == 0) {
-    //   hls.currentLevel = 4;
-    // }
-    // else {
-    //   hls.currentLevel = 0;
-    // }
+    if (hls.currentLevel == 0) {
+      hls.currentLevel = -1;
+    }
+    else {
+      hls.currentLevel = 0;
+    }
   }
 });
 

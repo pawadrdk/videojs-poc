@@ -27,7 +27,7 @@ playerElement.setAttribute("id", "videojs_player");
 playerElement.setAttribute("class", "video-js vjs-default-skin vjs-big-play-centered poc-player");
 playerElement.setAttribute("controls", "");
 playerElement.setAttribute("src", mp4);
-playerElement.setAttribute("poster", poster);
+//playerElement.setAttribute("poster", poster);
 
 // append video element to html handle.
 containerElement.appendChild(playerElement);

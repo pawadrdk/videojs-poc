@@ -12,6 +12,7 @@
   "dependencies": {
     "@dr/drc-media-decryption": "^1.0.1",
     "css-loader": "^0.26.1",
+    "hls.js": "^0.6.19",
     "http-server": "^0.9.0",
     "jquery": "^2.2.4",
     "less": "^2.7.2",

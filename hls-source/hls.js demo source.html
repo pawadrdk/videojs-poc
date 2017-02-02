@@ -649,7 +649,7 @@ $(document).ready(function() {
        video.addEventListener('durationchange', handleVideoEvent);
     } else {
       if(navigator.userAgent.toLowerCase().indexOf('firefox') !== -1) {
-      $("#HlsStatus").text("you are using Firefox, it looks like MediaSource is not enabled,<br>please ensure the following keys are set appropriately in <b>about:config</b><br>media.mediasource.enabled=true<br>media.mediasource.mp4.enabled=true<br><b>media.mediasource.whitelist=false</b>");
+        $("#HlsStatus").text("you are using Firefox, it looks like MediaSource is not enabled,<br>please ensure the following keys are set appropriately in <b>about:config</b><br>media.mediasource.enabled=true<br>media.mediasource.mp4.enabled=true<br><b>media.mediasource.whitelist=false</b>");
       } else {
         $("#HlsStatus").text("your Browser does not support MediaSourceExtension / MP4 mediasource");
       }
