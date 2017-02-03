@@ -7,15 +7,33 @@ const poster = "http://www.dr.dk/mu-online/api/1.3/bar/58760448a11fa01578861333?
 
 // Live streaming
 var decrypt = require("@dr/drc-media-decryption");
-var encrypted_hls = "http://drod08h-vh.akamaihd.net/i/dk/encrypted/streaming/75/588246aaa11f9f0c2c197375/The-Tonight-Show-med-Jimmy-Fal_fac673769752436faeda69fb8ba557ed_,1128,562,2394,362,.mp4.csmil/master.m3u8";
+var encryptedHls = "http://drod08h-vh.akamaihd.net/i/dk/encrypted/streaming/b6/58909b5ca11f9f02a8dfd5b6/The-Tonight-Show-med-Jimmy-Fal_c32ff57836314a14bb52fa880a3efee2_,1126,562,2395,362,.mp4.csmil/master.m3u8";
 
 var live = "http://dr01-lh.akamaihd.net/i/dr01_0@147054/master.m3u8?b=100-3000";
 console.log("live", live);
 
-
-
 var containerElement = document.getElementById("playerHandle");
 console.log(containerElement);
+
+//require("./src/js/liveStreamsDecryptorService")();
+
+// Build the standard video element
+// var playerElement = document.createElement("video");
+//
+// playerElement.setAttribute("height", "480");
+// playerElement.setAttribute("width", "640");
+// playerElement.setAttribute("id", "videojs_player");
+// playerElement.setAttribute("class", "video-js vjs-default-skin vjs-big-play-centered poc-player");
+// playerElement.setAttribute("controls", "");
+// playerElement.setAttribute("crossorigin", "anonymous");
+// playerElement.setAttribute("poster", poster);
+//
+// var source = document.createElement("source");
+// source.setAttribute("src", encrypted_hls);
+// source.setAttribute("type", "application/x-mpegURL");
+// // append source to player
+// playerElement.appendChild(source);
+//
 
 // Build the standard video element
 var playerElement = document.createElement("video");
@@ -25,31 +43,32 @@ playerElement.setAttribute("width", "640");
 playerElement.setAttribute("id", "videojs_player");
 playerElement.setAttribute("class", "video-js vjs-default-skin vjs-big-play-centered poc-player");
 playerElement.setAttribute("controls", "");
-
-var source = document.createElement("source");
-source.setAttribute("src", encrypted_hls);
-source.setAttribute("type", "application/x-mpegURL");
-// append source to player
-playerElement.appendChild(source);
+playerElement.setAttribute("crossorigin", "anonymous");
+playerElement.setAttribute("poster", poster);
 
 
-// var hls;
-//
-// if(Hls.isSupported()) {
-//   console.log('Got HLS');
-//   // alert('HLS');
-//   // hls = new Hls();
-//   // hls.loadSource(encrypted_hls);
-//   // hls.attachMedia(playerElement);
-//   // hls.on(Hls.Events.MANIFEST_PARSED,function() {
-//   //   playerElement.play();
-//   // });
-// }
-// else { // Running native iOS
-//   console.log('No HLS');
-//   //alert('NO HLS');
-//   //playerElement.setAttribute("src", remote_hls);
-// }
+
+var hls;
+
+if(Hls.isSupported()) {
+  console.log('Got HLS');
+
+  hls = new Hls();
+  hls.loadSource(encryptedHls);
+  hls.attachMedia(playerElement);
+  hls.on(Hls.Events.MANIFEST_PARSED,function() {
+    playerElement.play();
+  });
+}
+else { // Running native iOS
+  console.log('No HLS');
+//  build src element for iOS
+  var source = document.createElement("source");
+  source.setAttribute("src", encryptedHls);
+  source.setAttribute("type", "application/x-mpegURL");
+  // append source to player
+  playerElement.appendChild(source);
+}
 
 // append video element to html handle.
 containerElement.appendChild(playerElement);
@@ -104,13 +123,7 @@ var bingMenu = videojs.extend(vjsComponent, {
     /* do something on click */
     console.log('clicked');
     playerElement.play();
-    // if (hls.currentLevel == 0) {
-    //   hls.currentLevel = 4;
-    // }
-    // else {
-    //   hls.currentLevel = 0;
-    // }
-  }
+
 });
 
 // Register the new component with videojs
@@ -120,7 +133,5 @@ vjsComponent.registerComponent('bingMenu', bingMenu);
 var myBingMenu = player.addChild("bingMenu");
 
 player.on('loaded', function (evt) {
-  //console.log("loaded", evt);
-  //alert('Loaded');
-  playerElement.currentLevel = 0;
+  console.log("loaded", evt);
 });

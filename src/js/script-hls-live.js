@@ -112,5 +112,5 @@ var myBingMenu = player.addChild("bingMenu");
 player.on('loaded', function (evt) {
   //console.log("loaded", evt);
   //alert('Loaded');
-  playerElement.currentLevel = 0;
+  playerElement.currentLevel = 4;
 });
